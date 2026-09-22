@@ -1,4 +1,15 @@
-# React + Vite
+# OctoFit Tracker frontend
+
+The presentation tier calls the API through the Codespaces hostname. Define
+`VITE_CODESPACE_NAME` in `.env.local` before starting Vite:
+
+```text
+VITE_CODESPACE_NAME=your-codespace-name
+```
+
+Vite exposes only variables prefixed with `VITE_`. When this variable is not
+defined, the app safely uses relative `/api/.../` URLs, which is useful when the
+frontend and API are served from the same host.
 
 This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
 
