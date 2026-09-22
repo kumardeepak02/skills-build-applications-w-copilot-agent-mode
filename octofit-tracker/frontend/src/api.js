@@ -11,18 +11,18 @@ export function collectionFromResponse(payload) {
   if (Array.isArray(payload?.items)) return payload.items
   return []
 }
-export function useCollection(resource) {
+export function useCollection(resource, endpoint = apiUrl(resource)) {
   const [state, setState] = useState({ data: [], loading: true, error: '' })
   useEffect(() => {
     const controller = new AbortController()
-    fetch(apiUrl(resource), { signal: controller.signal }).then((response) => {
+    fetch(endpoint, { signal: controller.signal }).then((response) => {
       if (!response.ok) throw new Error(`Request failed (${response.status})`)
       return response.json()
     }).then((payload) => setState({ data: collectionFromResponse(payload), loading: false, error: '' })).catch((error) => {
       if (error.name !== 'AbortError') setState({ data: [], loading: false, error: error.message })
     })
     return () => controller.abort()
-  }, [resource])
+  }, [resource, endpoint])
   return state
 }
 export function ResourceState({ loading, error, children }) {
